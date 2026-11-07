@@ -1,8 +1,8 @@
 import json
 import urllib.request
-import urllib.error
 import urllib.parse
 from datetime import date
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 BASE_URL = "https://api.hfs.purdue.edu/menus/v2/locations"
 
@@ -12,26 +12,42 @@ def build_url(court, day=None):
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"Accept": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            return resp.headers.get("Content-Type", ""), resp.read()
-    except urllib.error.HTTPError as e:
-        print(f"HTTP {e.code} for {url}")
-        print(e.read()[:300].decode("utf-8", errors="replace"))
-        raise SystemExit(1)
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        return json.loads(resp.read())
 
-# walk through the API response
-def walk(elem, depth=0):
-    text = (elem.text or "").strip()
-    print("  " * depth + f"<{elem.tag}> {elem.attrib or ''} {text}")
-    for child in elem:
-        walk(child, depth + 1)
+def has_eggs(item):
+    for a in item.get("Allergens", []):
+        if a.get("Name", "").lower() in ("egg", "eggs") and a.get("Value"):
+            return True
+    return False
 
-url = build_url("Earhart")
-print("Requesting:", url)
+def keep(item):
+    return bool(item.get("IsVegetarian")) and not has_eggs(item)
 
-content_type, body = fetch(url)
-print("Content-Type:", content_type)
+def filter_menu(data):
+    meals = []
+    for meal in data.get("Meals", []):
+        stations = []
+        for station in meal.get("Stations", []):
+            items = [i["Name"] for i in station.get("Items", []) if keep(i)]
+            if items:
+                stations.append({"station": station["Name"], "items": items})
+        if stations:
+            meals.append({"meal": meal["Name"], "stations": stations})
+    return {"location": data.get("Location"), "date": data.get("Date"), "meals": meals}
 
-data = json.loads(body)
-print(json.dumps(data, indent=2))
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        parts = self.path.strip("/").split("/")
+        if len(parts) != 2 or parts[0] != "menu":
+            self.send_response(404)
+            self.end_headers()
+            return
+        court = urllib.parse.unquote(parts[1])
+        body = json.dumps(filter_menu(fetch(build_url(court)))).encode()
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(body)
+
+HTTPServer(("", 1234), Handler).serve_forever()
