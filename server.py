@@ -47,6 +47,7 @@ class Handler(BaseHTTPRequestHandler):
         body = json.dumps(filter_menu(fetch(build_url(court)))).encode()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*")  # page is on another origin
         self.end_headers()
         self.wfile.write(body)
 
