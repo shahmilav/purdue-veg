@@ -1,0 +1,62 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 0 1rem 3rem;
+  color: #1c1c1c;
+  background: #f6f1e7;
+}
+
+h1 {
+  margin: 0;
+}
+
+.blurb {
+  margin: 0.25rem 0 1rem;
+  color: #5c5346;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+button {
+  font: inherit;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid #1c1c1c;
+  background: #fff;
+  cursor: pointer;
+}
+
+
+/* active */
+button.on {
+  background: #cfb991;
+}
+
+#status {
+  color: #5c5346;
+  min-height: 1.2em;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin: 1.4rem 0 0.3rem;
+  border-bottom: 1px solid #1c1c1c;
+}
+
+h3 {
+  font-size: 1rem;
+  margin: 0.8rem 0 0.2rem;
+}
+
+ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+li {
+  margin: 0.15rem 0;
+}
