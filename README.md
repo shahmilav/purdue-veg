@@ -10,7 +10,7 @@ Create an easy to use website that filters the food options.
 The MVP scope is to simply have a website that has the vegetarian+eggless food options at each dinign court on a given day.
 
 ## Roadmap
-- [ ] Build MVP
+- [X] Build MVP
 - [ ] Make it more accessible by adding custom filters
 - [ ] Add caching to make the server more efficient
 
