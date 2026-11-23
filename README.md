@@ -18,5 +18,5 @@ The MVP scope is to simply have a website that has the vegetarian+eggless food o
 ![System Diagram](./system-diagram.png)
 
 ## Tech Stack
-- Python with Flask for the webserver
+- Python for the webserver
 - HTML/CSS/JS for the frontend UI
