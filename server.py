@@ -9,7 +9,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 BASE_URL = "https://api.hfs.purdue.edu/menus/v2/locations"
 
 
-# construct the URL
 def build_url(court, day=None):
     """Constructs the API url using the dining court and the current date."""
 
