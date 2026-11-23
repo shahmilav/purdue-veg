@@ -3,56 +3,72 @@ body {
   max-width: 40rem;
   margin: 2rem auto;
   padding: 0 1rem 3rem;
-  color: #1c1c1c;
-  background: #f6f1e7;
+  color: #000000;
+  background: #FFFFFF;
 }
 
-h1 {
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   margin: 0;
   font-weight: 400;
   text-align: center;
+  color: #000000;
+}
+
+.logo-p {
+  height: 2.25rem;
+  width: auto;
+  display: block;
 }
 
 .blurb {
   margin: 0.25rem 0 1rem;
-  color: #5c5346;
+  color: #555960;
   text-align: center;
 }
 
 nav {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.4rem;
 }
 
 button {
   font: inherit;
   padding: 0.35rem 0.75rem;
-  border: 1px solid #1c1c1c;
-  background: #fff;
+  border: 1px solid #000000;
+  border-radius: 0.35rem;
+  background: #FFFFFF;
+  color: #000000;
   cursor: pointer;
 }
 
 
 /* active */
 button.on {
-  background: #cfb991;
+  background: #CFB991;
 }
 
 #status {
-  color: #5c5346;
+  color: #6F727B;
   min-height: 1.2em;
 }
 
 h2 {
   font-size: 1.25rem;
   margin: 1.4rem 0 0.3rem;
-  border-bottom: 1px solid #1c1c1c;
+  border-bottom: 1px solid #000000;
+  color: #000000;
 }
 
 h3 {
   font-size: 1rem;
   margin: 0.8rem 0 0.2rem;
+  color: #8E6F3E;
 }
 
 ul {
@@ -61,5 +77,5 @@ ul {
 }
 
 li {
-  margin: 0.15rem 0;
+  margin: 0.60rem 0;
 }
