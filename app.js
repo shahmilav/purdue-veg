@@ -8,6 +8,9 @@ const courtsEl = document.querySelector("#courts");
 const statusEl = document.querySelector("#status");
 const menuEl = document.querySelector("#menu");
 
+// cache menus by court so re-clicking a button skips the API call
+const cache = {};
+
 // create buttons for each dining court
 for (const name of COURTS) {
   const btn = document.createElement("button");
@@ -29,6 +32,12 @@ async function load(court, btn) {
   for (const b of courtsEl.querySelectorAll("button")) b.classList.remove("on");
   btn.classList.add("on");
 
+  // reuse a previously fetched menu for this court
+  if (cache[court]) {
+    show(cache[court]);
+    return;
+  }
+
   statusEl.textContent = "Loading...";
   menuEl.replaceChildren();
 
@@ -39,7 +48,9 @@ async function load(court, btn) {
 
     // bad response if we don't get an HTTP 200 OK
     if (!res.ok) throw new Error("bad response");
-      show(await res.json());
+      const data = await res.json();
+      cache[court] = data;
+      show(data);
   } catch {
       statusEl.textContent = "server error";
   }
